@@ -1,0 +1,164 @@
+/* styles.css */
+/* Custom styles for the timer application */
+.timer-card {
+    width: 300px;
+    height: 300px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.timer-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.timer-icon {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.timer-icon svg {
+    width: 120px;
+    height: 120px;
+}
+
+.timer-button {
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 100px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.timer-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.back-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f3f4f6;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.back-button:hover {
+    background-color: #e5e7eb;
+    transform: translateX(-2px);
+}
+
+.milliseconds {
+    font-size: 0.5em;
+    color: #6b7280;
+    vertical-align: super;
+}
+
+.number-button {
+    padding: 16px 0;
+    border-radius: 12px;
+    background-color: #f3f4f6;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.number-button:hover {
+    background-color: #e5e7eb;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Alert styles */
+.alert {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    animation: slideIn 0.3s ease-out, fadeOut 0.5s ease-in 2.5s forwards;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.alert-icon {
+    margin-right: 0.75rem;
+    flex-shrink: 0;
+}
+
+.alert-success {
+    background-color: #d1fae5;
+    color: #065f46;
+    border-left: 4px solid #10b981;
+}
+
+.alert-warning {
+    background-color: #fffbeb;
+    color: #92400e;
+    border-left: 4px solid #f59e0b;
+}
+
+.alert-error {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    border-left: 4px solid #ef4444;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+    .timer-card {
+        width: 280px;
+        height: 280px;
+    }
+    
+    .timer-icon {
+        width: 160px;
+        height: 160px;
+    }
+    
+    .timer-icon svg {
+        width: 100px;
+        height: 100px;
+    }
+    
+    #stopwatch-display, #countdown-display {
+        font-size: 3.5rem;
+    }
+}

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div id="app" class="w-full max-w-4xl bg-white rounded-2xl shadow-xl overflow-hidden">
+        <!-- Alert Container -->
+        <div id="alert-container" class="fixed top-4 right-4 z-50 w-full max-w-sm"></div>
+        
+        <!-- Home Screen -->
+        <div id="home-screen" class="transition-all duration-500">
+            <div class="p-6 text-center">
+                <h1 class="text-3xl font-bold text-gray-800 mb-10">Time Tracker</h1>
+                <div class="flex flex-wrap justify-center gap-8">
+                    <!-- Stopwatch Card -->
+                    <div class="timer-card bg-green-50 hover:bg-green-100" id="stopwatch-card">
+                        <div class="timer-icon bg-green-100">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 8V12L15 15" stroke="#10B981" stroke-width="2" stroke-linecap="round"/>
+                                <circle cx="12" cy="12" r="9" stroke="#10B981" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <h2 class="text-xl font-semibold text-green-800 mt-4">Stopwatch</h2>
+                    </div>
+                    
+                    <!-- Countdown Card -->
+                    <div class="timer-card bg-red-50 hover:bg-red-100" id="countdown-card">
+                        <div class="timer-icon bg-red-100">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 8V12L9 15" stroke="#EF4444" stroke-width="2" stroke-linecap="round"/>
+                                <circle cx="12" cy="12" r="9" stroke="#EF4444" stroke-width="2"/>
+                                <path d="M18 6L6 18" stroke="#EF4444" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <h2 class="text-xl font-semibold text-red-800 mt-4">Countdown</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Stopwatch Screen -->
+        <div id="stopwatch-screen" class="hidden transition-all duration-500">
+            <div class="p-6">
+                <div class="flex items-center mb-6">
+                    <button id="back-from-stopwatch" class="back-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                    </button>
+                    <h1 class="text-2xl font-bold text-gray-800 ml-4">Stopwatch</h1>
+                </div>
+                
+                <div class="text-center mb-10">
+                    <div id="stopwatch-display" class="text-6xl md:text-7xl font-mono font-bold text-gray-800">
+                        00:00:00<span class="milliseconds">.000</span>
+                    </div>
+                </div>
+                
+                <div class="flex justify-center gap-4 mb-6">
+                    <button id="start-stopwatch" class="timer-button bg-green-500 hover:bg-green-600 text-white">Start</button>
+                    <button id="clear-stopwatch" class="timer-button bg-red-500 hover:bg-red-600 text-white">Clear</button>
+                    <button id="pause-stopwatch" class="timer-button bg-blue-500 hover:bg-blue-600 text-white hidden">Pause</button>
+                    <button id="continue-stopwatch" class="timer-button bg-blue-500 hover:bg-blue-600 text-white hidden">Continue</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Countdown Screen -->
+        <div id="countdown-screen" class="hidden transition-all duration-500">
+            <div class="p-6">
+                <div class="flex items-center mb-6">
+                    <button id="back-from-countdown" class="back-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                    </button>
+                    <h1 class="text-2xl font-bold text-gray-800 ml-4">Countdown</h1>
+                </div>
+                
+                <div class="text-center mb-6">
+                    <div id="countdown-display" class="text-6xl md:text-7xl font-mono font-bold text-gray-800">
+                        00:00:00<span class="milliseconds">.000</span>
+                    </div>
+                </div>
+                
+                <!-- Input Controls -->
+                <div id="countdown-input" class="mb-8">
+                    <div class="grid grid-cols-3 gap-3 max-w-xs mx-auto mb-4">
+                        <button class="number-button">1</button>
+                        <button class="number-button">2</button>
+                        <button class="number-button">3</button>
+                        <button class="number-button">4</button>
+                        <button class="number-button">5</button>
+                        <button class="number-button">6</button>
+                        <button class="number-button">7</button>
+                        <button class="number-button">8</button>
+                        <button class="number-button">9</button>
+                        <button class="number-button">0</button>
+                        <button id="backspace-countdown" class="timer-button bg-gray-500 hover:bg-gray-600 text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z" />
+                            </svg>
+                        </button>
+                        <button id="set-countdown" class="timer-button bg-green-500 hover:bg-green-600 text-white">Set</button>
+                        <button id="clear-countdown-input" class="timer-button bg-red-500 hover:bg-red-600 text-white">Clear</button>
+                    </div>
+                </div>
+                
+                <!-- Timer Controls -->
+                <div id="countdown-controls" class="hidden">
+                    <div class="flex justify-center gap-4">
+                        <button id="start-countdown" class="timer-button bg-green-500 hover:bg-green-600 text-white">Start</button>
+                        <button id="clear-countdown" class="timer-button bg-red-500 hover:bg-red-600 text-white">Clear</button>
+                        <button id="pause-countdown" class="timer-button bg-blue-500 hover:bg-blue-600 text-white hidden">Pause</button>
+                        <button id="continue-countdown" class="timer-button bg-blue-500 hover:bg-blue-600 text-white hidden">Continue</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

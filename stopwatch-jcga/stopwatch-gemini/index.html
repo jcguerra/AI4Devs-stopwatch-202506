@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch & Countdown App</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <!-- Main Application Container -->
+    <div id="app-container" class="relative w-full max-w-md mx-auto bg-white rounded-xl shadow-2xl overflow-hidden md:max-w-lg lg:max-w-xl" style="min-height: 600px;">
+        <!-- Common Title Bar -->
+        <div class="absolute top-0 left-0 right-0 p-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-center rounded-t-xl z-10">
+            <h1 id="current-screen-title" class="text-3xl font-bold">Timer App</h1>
+        </div>
+
+        <!-- Modal for Alerts -->
+        <div id="modal-overlay" class="hidden fixed inset-0 bg-black bg-opacity-50 items-center justify-center z-50 p-4">
+            <div class="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full text-center">
+                <p id="modal-message" class="text-xl font-semibold text-gray-800 mb-6"></p>
+                <button id="modal-close-btn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-full shadow-lg transition duration-200">
+                    OK
+                </button>
+            </div>
+        </div>
+
+        <!-- Home Screen -->
+        <div id="home-screen" class="screen-container pt-20 p-6 flex flex-col items-center justify-center h-full text-center">
+            <h2 class="text-3xl font-extrabold text-gray-900 mb-10">Choose a Timer</h2>
+            <div class="flex flex-col md:flex-row gap-8">
+                <!-- Stopwatch Option -->
+                <div id="stopwatch-option" class="timer-option cursor-pointer bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition duration-300 transform flex flex-col items-center justify-center w-full md:w-56 lg:w-64">
+                    <svg class="w-32 h-32 mb-4 text-green-500" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm.5 13H11V7h1.5v8zM12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-16c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zM13 3h-2v2h2V3zM13 19h-2v2h2v-2zM4 11h2v2H4v-2zM18 11h2v2h-2v-2z"/>
+                    </svg>
+                    <h3 class="text-2xl font-bold text-gray-800">Stopwatch</h3>
+                </div>
+
+                <!-- Countdown Option -->
+                <div id="countdown-option" class="timer-option cursor-pointer bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition duration-300 transform flex flex-col items-center justify-center w-full md:w-56 lg:w-64">
+                    <svg class="w-32 h-32 mb-4 text-red-500" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm.5 13H11V7h1.5v8zM12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-16c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zM13 3h-2v2h2V3zM13 19h-2v2h2v-2zM4 11h2v2H4v-2zM18 11h2v2h-2v-2z"/>
+                    </svg>
+                    <h3 class="text-2xl font-bold text-gray-800">Countdown</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stopwatch Screen -->
+        <div id="stopwatch-screen" class="screen-container screen-hidden pt-20 p-6 flex flex-col items-center justify-center h-full bg-gray-50">
+            <div class="w-full flex justify-start mb-6">
+                <nav class="text-sm font-medium text-gray-500">
+                    <ol class="list-none p-0 inline-flex">
+                        <li class="flex items-center">
+                            <a href="#" class="text-blue-600 hover:text-blue-800 breadcrumb-home">Home</a>
+                            <svg class="fill-current w-3 h-3 mx-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.489 71.25c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z"/></svg>
+                        </li>
+                        <li>
+                            <span class="text-gray-700">Stopwatch</span>
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+            <h2 class="text-3xl font-extrabold text-gray-900 mb-8">Stopwatch</h2>
+
+            <div id="stopwatch-display" class="bg-gray-100 p-8 rounded-xl shadow-inner mb-10 w-full text-center min-h-[120px] flex items-center justify-center">
+                <!-- Time will be injected here by JavaScript -->
+            </div>
+
+            <div class="flex gap-4">
+                <button id="start-stopwatch" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-200">
+                    Start
+                </button>
+                <button id="pause-stopwatch" class="hidden bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-200">
+                    Pause
+                </button>
+                <button id="continue-stopwatch" class="hidden bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-200">
+                    Continue
+                </button>
+                <button id="clear-stopwatch" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-200">
+                    Clear
+                </button>
+            </div>
+        </div>
+
+        <!-- Countdown Screen -->
+        <div id="countdown-screen" class="screen-container screen-hidden pt-20 p-6 flex flex-col items-center justify-center h-full bg-gray-50">
+            <div class="w-full flex justify-start mb-6">
+                <nav class="text-sm font-medium text-gray-500">
+                    <ol class="list-none p-0 inline-flex">
+                        <li class="flex items-center">
+                            <a href="#" class="text-blue-600 hover:text-blue-800 breadcrumb-home">Home</a>
+                            <svg class="fill-current w-3 h-3 mx-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.489 71.25c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z"/></svg>
+                        </li>
+                        <li>
+                            <span class="text-gray-700">Countdown</span>
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+            <h2 class="text-3xl font-extrabold text-gray-900 mb-8">Countdown</h2>
+
+            <div id="countdown-display" class="bg-gray-100 p-8 rounded-xl shadow-inner mb-10 w-full text-center min-h-[120px] flex items-center justify-center">
+                <!-- Time will be injected here by JavaScript -->
+            </div>
+
+            <!-- Countdown Input Controls -->
+            <div id="countdown-input-controls" class="flex flex-col items-center w-full">
+                <div class="grid grid-cols-3 gap-3 mb-6 w-full max-w-xs">
+                    <!-- Number buttons 0-9 -->
+                    <button class="digit-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-4 px-4 rounded-lg shadow-md transition duration-150 text-xl" data-digit="7">7</button>
+                    <button class="digit-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-4 px-4 rounded-lg shadow-md transition duration-150 text-xl" data-digit="8">8</button>
+                    <button class="digit-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-4 px-4 rounded-lg shadow-md transition duration-150 text-xl" data-digit="9">9</button>
+                    <button class="digit-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-4 px-4 rounded-lg shadow-md transition duration-150 text-xl" data-digit="4">4</button>
+                    <button class="digit-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-4 px-4 rounded-lg shadow-md transition duration-150 text-xl" data-digit="5">5</button>
+                    <button class="digit-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-4 px-4 rounded-lg shadow-md transition duration-150 text-xl" data-digit="6">6</button>
+                    <button class="digit-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-4 px-4 rounded-lg shadow-md transition duration-150 text-xl" data-digit="1">1</button>
+                    <button class="digit-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-4 px-4 rounded-lg shadow-md transition duration-150 text-xl" data-digit="2">2</button>
+                    <button class="digit-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-4 px-4 rounded-lg shadow-md transition duration-150 text-xl" data-digit="3">3</button>
+                    <button class="digit-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-4 px-4 rounded-lg shadow-md transition duration-150 text-xl col-span-3" data-digit="0">0</button>
+                </div>
+                <div class="flex gap-4 w-full justify-center">
+                    <button id="set-countdown" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-200">
+                        Set
+                    </button>
+                    <button id="clear-countdown-input" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-200">
+                        Clear
+                    </button>
+                </div>
+            </div>
+
+            <!-- Countdown Timer Controls -->
+            <div id="countdown-timer-controls" class="hidden flex gap-4 w-full justify-center">
+                <button id="start-countdown" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-200">
+                    Start
+                </button>
+                <button id="pause-countdown" class="hidden bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-200">
+                    Pause
+                </button>
+                <button id="continue-countdown" class="hidden bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-200">
+                    Continue
+                </button>
+                <button id="clear-countdown-timer" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-200">
+                    Clear
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Link to external JavaScript file -->
+    <script src="script.js"></script>
+</body>
+</html>

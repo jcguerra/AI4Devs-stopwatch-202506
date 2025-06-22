@@ -1,0 +1,47 @@
+/* styles.css */
+
+/* Additional transitions for smooth view switching */
+#stopwatch-screen,
+#countdown-screen,
+#home-screen {
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+/* Subtle millisecond styling */
+#stopwatch-ms,
+#countdown-ms {
+  font-size: 0.75rem;
+  vertical-align: super;
+  color: #4b5563; /* Tailwind gray-600 */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  svg.w-32.h-32 {
+    width: 5rem;
+    height: 5rem;
+  }
+
+  .text-5xl {
+    font-size: 2rem;
+  }
+
+  .text-3xl {
+    font-size: 1.5rem;
+  }
+
+  .text-2xl {
+    font-size: 1.25rem;
+  }
+}
+
+/* Hide elements utility */
+.hidden {
+  display: none !important;
+}
+
+/* Ensure alignment for display text */
+#stopwatch-display,
+#countdown-display {
+  letter-spacing: 0.05em;
+}
